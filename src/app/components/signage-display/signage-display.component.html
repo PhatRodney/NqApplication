@@ -1,0 +1,45 @@
+<div class="signage-container">
+  <header class="header">
+    <div class="store-info">
+      @if (userConfig(); as config) {
+        @if (config.logoUrl) {
+          <img [src]="config.logoUrl" alt="Store Logo" class="logo" />
+        }
+        <h1 class="store-name">{{ config.storeName }}</h1>
+      }
+    </div>
+  </header>
+
+  <div class="scroll-container" #scrollContainer>
+    @if (isLoading()) {
+      <div class="loading">
+        <div class="spinner"></div>
+        <p>Loading products...</p>
+      </div>
+    } @else {
+      <div class="content">
+        @for (categoryGroup of productsByCategory(); track trackByCategory($index, categoryGroup)) {
+          <section class="category-section">
+            <h2 class="category-title">{{ categoryGroup.category.name }}</h2>
+            <div class="products-grid">
+              @for (product of categoryGroup.products; track trackByProduct($index, product)) {
+                <div class="product-card">
+                  @if (product.imageUrl) {
+                    <div class="product-image">
+                      <img [src]="product.imageUrl" [alt]="product.name" />
+                    </div>
+                  }
+                  <div class="product-info">
+                    <h3 class="product-name">{{ product.name }}</h3>
+                    <p class="product-description">{{ product.description }}</p>
+                    <div class="product-price">${{ product.price.toFixed(2) }}</div>
+                  </div>
+                </div>
+              }
+            </div>
+          </section>
+        }
+      </div>
+    }
+  </div>
+</div>
