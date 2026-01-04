@@ -1,19 +1,23 @@
 import { Configuration, LogLevel } from '@azure/msal-browser';
+import { environment } from '../../environments/environment';
 
 /**
  * MSAL Configuration
  * To use this with your Azure AD B2C or Azure AD tenant:
  * 1. Register an app in Azure Portal
- * 2. Update the clientId with your Application (client) ID
- * 3. Update the authority with your tenant information
- * 4. Add http://localhost:4200 as a redirect URI in your app registration
+ * 2. Update the environment.ts file with your Application (client) ID and Tenant ID
+ * 3. Add http://localhost:4200 as a redirect URI in your app registration
+ * 
+ * For production, set environment variables:
+ * - AZURE_CLIENT_ID: Your Application (client) ID
+ * - AZURE_TENANT_ID: Your Directory (tenant) ID
  */
 export const msalConfig: Configuration = {
   auth: {
-    clientId: 'YOUR_CLIENT_ID_HERE', // Replace with your client ID from Azure Portal
-    authority: 'https://login.microsoftonline.com/YOUR_TENANT_ID_HERE', // Replace with your tenant
-    redirectUri: 'http://localhost:4200',
-    postLogoutRedirectUri: 'http://localhost:4200'
+    clientId: environment.msalConfig.clientId,
+    authority: `https://login.microsoftonline.com/${environment.msalConfig.tenantId}`,
+    redirectUri: environment.production ? window.location.origin : 'http://localhost:4200',
+    postLogoutRedirectUri: environment.production ? window.location.origin : 'http://localhost:4200'
   },
   cache: {
     cacheLocation: 'localStorage',
@@ -55,3 +59,4 @@ export const protectedResources = {
     scopes: ['user.read']
   }
 };
+

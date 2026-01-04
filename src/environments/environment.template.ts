@@ -1,6 +1,13 @@
 /**
- * Environment configuration
- * Set demoMode to true to bypass MSAL authentication for testing
+ * Environment configuration template
+ * 
+ * This file serves as a template for environment configuration.
+ * Copy this file to create your own environment configuration:
+ * 
+ * For development: Update src/environments/environment.ts
+ * For production: Update src/environments/environment.prod.ts
+ * 
+ * IMPORTANT: Never commit real credentials to version control!
  */
 export const environment = {
   production: false,
@@ -11,4 +18,3 @@ export const environment = {
     tenantId: 'YOUR_TENANT_ID_HERE'  // Replace with your Azure AD tenant ID
   }
 };
-
