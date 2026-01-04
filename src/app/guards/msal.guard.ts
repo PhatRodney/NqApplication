@@ -1,8 +1,14 @@
 import { inject } from '@angular/core';
 import { Router, CanActivateFn } from '@angular/router';
 import { MsalService } from '@azure/msal-angular';
+import { environment } from '../../environments/environment';
 
 export const msalGuard: CanActivateFn = () => {
+  // In demo mode, bypass authentication
+  if (environment.demoMode) {
+    return true;
+  }
+
   const msalService = inject(MsalService);
   const router = inject(Router);
 
@@ -25,3 +31,4 @@ export const msalGuard: CanActivateFn = () => {
 
   return true;
 };
+
